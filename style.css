@@ -1,0 +1,23 @@
+.wrapper {
+  margin: 50px auto;
+  max-width: 1200px;
+  text-align: center;
+  color: coral;
+  font-size: 40px;
+}
+
+.text-space {
+  display: block;
+  margin: 0 auto;
+  width: 900px;
+  border: 1.5px solid coral;
+}
+
+.keyboard {
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 1200px;
+  display: block;
+  border: 1.5px solid coral;
+  color: coral;
+}
