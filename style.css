@@ -1,23 +1,104 @@
 .wrapper {
-  margin: 50px auto;
-  max-width: 1200px;
-  text-align: center;
-  color: coral;
-  font-size: 40px;
+	margin: 30px auto;
+	max-width: 1200px;
+	text-align: center;
+	color: coral;
+	font-size: 40px;
 }
 
 .text-space {
-  display: block;
-  margin: 0 auto;
-  width: 900px;
-  border: 1.5px solid coral;
+	display: block;
+	margin: 0 auto;
+	width: 900px;
+	min-height: 200px;
+	border: 1.5px solid coral;
 }
 
 .keyboard {
-  margin: 50px auto;
-  padding: 20px;
-  max-width: 1200px;
-  display: block;
-  border: 1.5px solid coral;
-  color: coral;
+	display: block;
+	border: 2px solid coral;
+	padding: 30px;
+	margin: 50px;
+	border-radius: 10px;
+	max-width: 1300px;
+	margin: 0 auto;
+	position: relative;
+	color: coral;
+}
+
+.keyboard::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.k-key {
+	width: 70px;
+	height: 70px;
+	border: 1.5px solid coral;
+	border-radius: 5px;
+	color: coral;
+	font-size: 20px;
+	margin: 4px;
+	padding: 3px;
+	float: left;
+}
+
+.clearfix {
+	clear: both;
+}
+
+.active {
+	background-color: coral;
+	color: #fff;
+}
+
+.del,
+.tab,
+.capsLock,
+.enter {
+	width: 150px;
+}
+
+.enter {
+	width: 155px;
+}
+
+.shift-left,
+.shift-right {
+	width: 195px;
+}
+
+.cmd-left,
+.cmd-right {
+	width: 85px;
+}
+
+.space {
+	width: 463px;
+}
+
+.arrow-up,
+.arrow-down {
+	height: 30px;
+}
+
+
+.arrow-down {
+	bottom: 30px;
+	position: absolute;
+	right: 131px;
+	text-align: center;
+}
+
+.arrow-up,
+.arrow-down,
+.arrow-right,
+.arrow-left {
+	text-align: center;
+}
+
+.arrow-right,
+.arrow-left {
+	line-height: 65px;
 }
