@@ -1,11 +1,14 @@
 .wrapper {
-	margin: 30px auto;
+	margin: 15px auto;
 	max-width: 1200px;
 	text-align: center;
 	color: coral;
 	font-size: 40px;
 }
 
+.title {
+	margin: 10px;
+}
 .text-space {
 	display: block;
 	margin: 0 auto;
@@ -24,6 +27,8 @@
 	margin: 0 auto;
 	position: relative;
 	color: coral;
+	box-shadow: 0.3px 3px 10px rgba(255, 128, 82, 0.344), -2px -2px 5px rgb(255, 128, 82, 0.2);
+	background-color:rgba(245, 245, 245, 0.387);
 }
 
 .keyboard::after {
@@ -42,6 +47,8 @@
 	margin: 4px;
 	padding: 3px;
 	float: left;
+	cursor: pointer;
+	box-shadow: 0.2px 0px 1px chocolate, 2px 3px 3px chocolate;
 }
 
 .clearfix {
@@ -51,6 +58,7 @@
 .active {
 	background-color: coral;
 	color: #fff;
+	transition: ease-in 0.2s;
 }
 
 .del,
