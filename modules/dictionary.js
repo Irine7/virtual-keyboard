@@ -1,6 +1,6 @@
 // Создаем массив кнопок клавиатуры
 
-const englishKeys = [
+export const englishKeys = [
 	{ value: "`", shiftValue: "~", code: "Backquote" },
 	{ value: "1", shiftValue: "!", code: "Digit1" },
 	{ value: "2", shiftValue: "@", code: "Digit2" },
@@ -71,4 +71,73 @@ const englishKeys = [
 	{ value: "►", shiftValue: "►", code: "ArrowRight" }
 ];
 
-export default englishKeys;
+export const russianKeys = [
+	{ value: "ё", shiftValue: "Ё", code: "Backquote" },
+	{ value: "1", shiftValue: "!", code: "Digit1" },
+	{ value: "2", shiftValue: '"', code: "Digit2" },
+	{ value: "3", shiftValue: "№", code: "Digit3" },
+	{ value: "4", shiftValue: ";", code: "Digit4" },
+	{ value: "5", shiftValue: "%", code: "Digit5" },
+	{ value: "6", shiftValue: ":", code: "Digit6" },
+	{ value: "7", shiftValue: "?", code: "Digit7" },
+	{ value: "8", shiftValue: "*", code: "Digit8" },
+	{ value: "9", shiftValue: "(", code: "Digit9" },
+	{ value: "0", shiftValue: ")", code: "Digit0" },
+	{ value: "-", shiftValue: "_", code: "Minus" },
+	{ value: "=", shiftValue: "+", code: "Equal" },
+	{ value: "Delete", shiftValue: "Del", code: "Delete" },
+
+	{ value: "Tab", shiftValue: "Tab", code: "Tab" },
+	{ value: "й", shiftValue: "Й", code: "KeyQ" },
+	{ value: "ц", shiftValue: "Ц", code: "KeyW" },
+	{ value: "у", shiftValue: "У", code: "KeyE" },
+	{ value: "к", shiftValue: "К", code: "KeyR" },
+	{ value: "е", shiftValue: "Е", code: "KeyT" },
+	{ value: "н", shiftValue: "Н", code: "KeyY" },
+	{ value: "г", shiftValue: "Г", code: "KeyU" },
+	{ value: "ш", shiftValue: "Ш", code: "KeyI" },
+	{ value: "щ", shiftValue: "Щ", code: "KeyO" },
+	{ value: "з", shiftValue: "З", code: "KeyP" },
+	{ value: "х", shiftValue: "Х", code: "BracketLeft" },
+	{ value: "ъ", shiftValue: "Ъ", code: "BracketRight" },
+	{ value: "\\", shiftValue: "/", code: "Backslash" },
+
+	{ value: "CapsLock", shiftValue: "CapsLock", code: "CapsLock" },
+	{ value: "ф", shiftValue: "Ф", code: "KeyA" },
+	{ value: "ы", shiftValue: "Ы", code: "KeyS" },
+	{ value: "в", shiftValue: "В", code: "KeyD" },
+	{ value: "а", shiftValue: "А", code: "KeyF" },
+	{ value: "п", shiftValue: "П", code: "KeyG" },
+	{ value: "р", shiftValue: "Р", code: "KeyH" },
+	{ value: "о", shiftValue: "О", code: "KeyJ" },
+	{ value: "л", shiftValue: "Л", code: "KeyK" },
+	{ value: "д", shiftValue: "Д", code: "KeyL" },
+	{ value: "ж", shiftValue: "Ж", code: "Semicolon" },
+	{ value: "э", shiftValue: "Э", code: "Quote" },
+	{ value: "Enter", shiftValue: "Enter", code: "Enter" },
+
+	{ value: "Shift", shiftValue: "Shift", code: "ShiftLeft" },
+	{ value: "я", shiftValue: "Я", code: "KeyZ" },
+	{ value: "ч", shiftValue: "Ч", code: "KeyX" },
+	{ value: "с", shiftValue: "С", code: "KeyC" },
+	{ value: "м", shiftValue: "М", code: "KeyV" },
+	{ value: "и", shiftValue: "И", code: "KeyB" },
+	{ value: "т", shiftValue: "Т", code: "KeyN" },
+	{ value: "ь", shiftValue: "Ь", code: "KeyM" },
+	{ value: "б", shiftValue: "Б", code: "Comma" },
+	{ value: "ю", shiftValue: "Ю", code: "Period" },
+	{ value: ".",  shiftValue: ".", code: "Period" },
+	{ value: "Shift", shiftValue: "Shift", code: "ShiftRight" },
+
+	{ value: "fn", shiftValue: "fn", code: "Fn" },
+	{ value: "control", shiftValue: "control", code: "ControlLeft" },
+	{ value: "option",  shiftValue: "option", code: "AltLeft" },
+	{ value: "⌘", shiftValue: "⌘", code: "MetaLeft" },
+	{ value: "Space", shiftValue: "Space", code: "Space" },
+	{ value: "⌘", shiftValue: "⌘", code: "MetaRight" },
+	{ value: "option", shiftValue: "option", code: "AltRight" },
+	{ value: "◀", shiftValue: "◀", code: "ArrowLeft" },
+	{ value: "▲", shiftValue: "▲", code: "ArrowUp" },
+	{ value: "▼", shiftValue: "▼", code: "ArrowDown" },
+	{ value: "►", shiftValue: "►", code: "ArrowRight" }
+];

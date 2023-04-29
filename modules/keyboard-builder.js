@@ -34,6 +34,6 @@ mainDiv.append(textarea);
 // Создаем div keyboard
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
-// keyboard.textContent = 'keyboard'
+keyboard.setAttribute('data-language', 'en');
 document.body.append(keyboard);
 }
