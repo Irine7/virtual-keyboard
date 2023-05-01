@@ -179,7 +179,7 @@ document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 		} else if (code === 'Enter') {
 			textarea.value += '\n'; // добавляем символ перевода строки
 		} else if (code === 'Tab') {
-			textarea.value += '    '; // добавляем табуляцию (четыре пробела)
+			textarea.value += '\t'; // добавляем табуляцию
 		} else if (code === 'CapsLock' || code === 'Shift' || code === 'Ctrl' || code === 'Alt') {
 			// ничего не делаем при нажатии этих клавиш
 		} else {
@@ -187,6 +187,21 @@ document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 		}
 		textarea.focus();
 	});
+});
+
+// Обработчик нажатия клавиш на физической клавиатуре
+document.addEventListener('keydown', function(event) {
+	const textarea = document.querySelector('.text-space');
+
+	if (event.key === 'Tab') {
+			event.preventDefault(); // Отменяем стандартное поведение браузера
+			const start = textarea.selectionStart;
+			const end = textarea.selectionEnd;
+			const indent = '    '; // отступ в четыре пробела
+			textarea.value = textarea.value.substring(0, start) + indent + textarea.value.substring(end);
+			textarea.selectionStart = textarea.selectionEnd = start + indent.length;
+			textarea.focus();
+	}
 });
 
 // сохранение языка раскладки в localStorage
