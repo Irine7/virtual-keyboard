@@ -125,11 +125,11 @@ function toggleKeyboardLayout() {
 
 	// Обновляем значения на кнопках
 	for (let i = 0; i < keys.length; i++) {
-			const key = keys[i];
-			const code = currentLayout[i].code;
-			const value = isRussianKeyboard ? currentLayout[i].shiftValue : currentLayout[i].value;
-			key.setAttribute('data', code);
-			key.innerHTML = value;
+		const key = keys[i];
+		const code = currentLayout[i].code;
+		const value = isRussianKeyboard ? currentLayout[i].shiftValue : currentLayout[i].value;
+		key.setAttribute('data', code);
+		key.innerHTML = value;
 	}
 
 	// Меняем значение переменной language и добавляем/удаляем класс на клавиатуре
@@ -138,19 +138,19 @@ function toggleKeyboardLayout() {
 		keyboard.setAttribute('data-language', 'ru');
 		language = 'ru';
 } else {
-		keyboard.setAttribute('data-language', 'en');
-		language = 'en';
+	keyboard.setAttribute('data-language', 'en');
+	language = 'en';
 }
 // Сохраняем language в localStorage
-localStorage.setItem('language', language);
+	localStorage.setItem('language', language);
 }
 
 // Добавляем обработчик на нажатие клавиш
 document.addEventListener('keydown', function(event) {
 	if (event.code === 'ShiftLeft') {
-			isLeftShiftPressed = true;
+		isLeftShiftPressed = true;
 	} else if (event.code === 'ControlLeft') {
-			isLeftControlPressed = true;
+		isLeftControlPressed = true;
 	}
 
 	if (checkModifierKeys()) {
@@ -161,9 +161,9 @@ document.addEventListener('keydown', function(event) {
 // Добавляем обработчик на отпускание клавиш
 document.addEventListener('keyup', function(event) {
 	if (event.code === 'ShiftLeft') {
-			isLeftShiftPressed = false;
+		isLeftShiftPressed = false;
 	} else if (event.code === 'ControlLeft') {
-			isLeftControlPressed = false;
+		isLeftControlPressed = false;
 	}
 });
 
@@ -173,19 +173,19 @@ document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 		const code = event.target.getAttribute('data');
 		const textarea = document.querySelector('.text-space');
 
-		// проверяем, является ли клавиша служебной
-		if (code === 'Backspace') {
-			textarea.value = textarea.value.slice(0, -1); // удаляем последний символ
-		} else if (code === 'Enter') {
-			textarea.value += '\n'; // добавляем символ перевода строки
-		} else if (code === 'Tab') {
-			textarea.value += '\t'; // добавляем табуляцию
-		} else if (code === 'CapsLock' || code === 'Shift' || code === 'Ctrl' || code === 'Alt') {
-			// ничего не делаем при нажатии этих клавиш
-		} else {
-			textarea.value += event.shiftKey ? this.textContent.toUpperCase() : this.textContent.toLowerCase(); // добавляем значение клавиши
-		}
-		textarea.focus();
+	// проверяем, является ли клавиша служебной
+	if (code === 'Backspace') {
+		textarea.value = textarea.value.slice(0, -1); // удаляем последний символ
+	} else if (code === 'Enter') {
+		textarea.value += '\n'; // добавляем символ перевода строки
+	} else if (code === 'Tab') {
+		textarea.value += '\t'; // добавляем табуляцию
+	} else if (code === 'CapsLock' || code === 'Shift' || code === 'Ctrl' || code === 'Alt') {
+		// ничего не делаем при нажатии этих клавиш
+	} else {
+		textarea.value += event.shiftKey ? this.textContent.toUpperCase() : this.textContent.toLowerCase(); // добавляем значение клавиши
+	}
+	textarea.focus();
 	});
 });
 
@@ -194,13 +194,13 @@ document.addEventListener('keydown', function(event) {
 	const textarea = document.querySelector('.text-space');
 
 	if (event.key === 'Tab') {
-			event.preventDefault(); // Отменяем стандартное поведение браузера
-			const start = textarea.selectionStart;
-			const end = textarea.selectionEnd;
-			const indent = '    '; // отступ в четыре пробела
-			textarea.value = textarea.value.substring(0, start) + indent + textarea.value.substring(end);
-			textarea.selectionStart = textarea.selectionEnd = start + indent.length;
-			textarea.focus();
+		event.preventDefault(); // Отменяем стандартное поведение браузера
+		const start = textarea.selectionStart;
+		const end = textarea.selectionEnd;
+		const indent = '    '; // отступ в четыре пробела
+		textarea.value = textarea.value.substring(0, start) + indent + textarea.value.substring(end);
+		textarea.selectionStart = textarea.selectionEnd = start + indent.length;
+		textarea.focus();
 	}
 });
 

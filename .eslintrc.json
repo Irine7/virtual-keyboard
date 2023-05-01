@@ -1,0 +1,11 @@
+module.exports = {
+	"plugins": [
+		"import"
+	],
+	"extends": [
+		"airbnb-base"
+	],
+	"rules": {
+		"import/extensions": "off"
+	}
+};
