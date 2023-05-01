@@ -2,6 +2,8 @@ import {englishKeys, russianKeys} from './modules/dictionary.js';
 import { createVirtualKeyboard } from './modules/keyboard-builder.js';
 createVirtualKeyboard();
 
+alert('press Shift and Control for change language');
+
 window.addEventListener('load', function() {
 	document.querySelector('.text-space').focus();
 	let language = localStorage.getItem('language') || 'en';
@@ -138,10 +140,10 @@ function toggleKeyboardLayout() {
 	isRussianKeyboard = !isRussianKeyboard;
 	if (isRussianKeyboard) {
 		keyboard.setAttribute('data-language', 'ru');
-		language = 'ru';
+		let language = 'ru';
 } else {
 	keyboard.setAttribute('data-language', 'en');
-	language = 'en';
+	let language = 'en';
 }
 // Сохраняем language в localStorage
 	localStorage.setItem('language', language);
