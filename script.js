@@ -2,6 +2,10 @@ import {englishKeys, russianKeys} from './modules/dictionary.js';
 import { createVirtualKeyboard } from './modules/keyboard-builder.js';
 createVirtualKeyboard();
 
+window.onload = function() {
+	document.querySelector('.text-space').focus();
+}
+
 function fillVirtualKeyboard() {
 	let out = '';
 	for (let i = 0; i < englishKeys.length; i++) {
@@ -42,7 +46,73 @@ document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 	});
 });
 
+// Объект, который хранит информацию о нажатых клавишах
+let pressedKeys = {};
+
+// Функция, которая обновляет статус клавиш в объекте pressedKeys и меняет язык при необходимости
+function updatePressedKeysAndToggleLanguage(event) {
+	const code = event.code;
+	const isShiftPressed = pressedKeys['ShiftLeft'] || pressedKeys['ShiftRight'];
+	const isCtrlPressed = pressedKeys['ControlLeft'] || pressedKeys['ControlRight'];
+
+if (event.type === 'keydown') {
+	pressedKeys[code] = true;
+
+	if (isShiftPressed && isCtrlPressed) {
+		toggleKeyboardLayout();
+	}
+} else if (event.type === 'keyup') {
+	delete pressedKeys[code];
+}
+
+const keyboard = document.querySelector('.keyboard');
+const isRussian = isShiftPressed && isCtrlPressed;
+keyboard.setAttribute('data-language', isRussian ? 'ru' : 'en');
+
+document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
+	const key = element.getAttribute('data');
+	const isPressed = pressedKeys[key];
+
+	if (isPressed) {
+		element.classList.add('active');
+	} else {
+		element.classList.remove('active');
+	}
+});
+}
+
+// Добавляем обработчики на клавиатуру
+document.addEventListener('keydown', updatePressedKeysAndToggleLanguage);
+document.addEventListener('keyup', updatePressedKeysAndToggleLanguage);
+
+// Добавляем обработчик на кнопки виртуальной клавиатуры
+document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
+	element.addEventListener('mousedown', function (event) {
+		pressedKeys[this.getAttribute('data')] = true;
+		element.classList.add('active');
+});
+
+element.addEventListener('mouseup', function (event) {
+	delete pressedKeys[this.getAttribute('data')];
+	element.classList.remove('active');
+});
+
+element.addEventListener('mouseleave', function (event) {
+	if (pressedKeys[this.getAttribute('data')]) {
+		element.classList.remove('active');
+	}
+});
+});
+
+
 let isRussianKeyboard = false; // начальное значение - английская раскладка клавиатуры
+let isLeftShiftPressed = false; // значение - не нажата левая клавиша shift
+let isLeftControlPressed = false; // значение - не нажата левая клавиша control
+
+// Функция для проверки нажатия левой клавиши shift и control
+function checkModifierKeys() {
+	return isLeftShiftPressed && isLeftControlPressed;
+}
 
 // Функция для переключения между русской и английской раскладками
 function toggleKeyboardLayout() {
@@ -62,18 +132,45 @@ function toggleKeyboardLayout() {
 	// Меняем значение переменной isRussianKeyboard и добавляем/удаляем класс на клавиатуре
 	isRussianKeyboard = !isRussianKeyboard;
 	if (isRussianKeyboard) {
-			keyboard.classList.add('russian');
+			keyboard.setAttribute('data-language', 'ru');
 	} else {
-			keyboard.classList.remove('russian');
+			keyboard.setAttribute('data-language', 'en');
 	}
 }
 
-// Добавляем обработчик на кнопку "Control"
+// Добавляем обработчик на нажатие клавиш
 document.addEventListener('keydown', function(event) {
-	if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
-			toggleKeyboardLayout();
+	if (event.code === 'ShiftLeft') {
+			isLeftShiftPressed = true;
+	} else if (event.code === 'ControlLeft') {
+			isLeftControlPressed = true;
+	}
+
+	if (checkModifierKeys()) {
+		toggleKeyboardLayout();
 	}
 });
+
+// Добавляем обработчик на отпускание клавиш
+document.addEventListener('keyup', function(event) {
+	if (event.code === 'ShiftLeft') {
+			isLeftShiftPressed = false;
+	} else if (event.code === 'ControlLeft') {
+			isLeftControlPressed = false;
+	}
+});
+
+// Добавляем ввод текста по клику мышкой
+document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
+	element.addEventListener('click', function (event) {
+		const code = event.target.textContent;
+		const textarea = document.querySelector('.text-space');
+		textarea.value += event.shiftKey ? code.toUpperCase() : code.toLowerCase();
+		textarea.focus();
+	});
+});
+
+
 
 // Находим кнопки для задания стилей
 const delButton = document.querySelector('.k-key[data="Delete"]');
@@ -102,3 +199,5 @@ const arrowLeftButton = document.querySelector('.k-key[data="ArrowLeft"]');
 arrowLeftButton.classList.add('arrow-left');
 const arrowRightButton = document.querySelector('.k-key[data="ArrowRight"]');
 arrowRightButton.classList.add('arrow-right');
+const controlButton = document.querySelector('.k-key[data="ControlLeft"]');
+controlButton.classList.add('control-left');
