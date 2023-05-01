@@ -4,7 +4,7 @@ createVirtualKeyboard();
 
 window.addEventListener('load', function() {
 	document.querySelector('.text-space').focus();
-	const language = localStorage.getItem('language') || 'en';
+	let language = localStorage.getItem('language') || 'en';
 	toggleKeyboardLayout(language);
 });
 
@@ -53,35 +53,37 @@ document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 let pressedKeys = {};
 
 // Функция, которая обновляет статус клавиш в объекте pressedKeys и меняет язык при необходимости
+let keysPressedCount = 0;
+
 function updatePressedKeysAndToggleLanguage(event) {
 	const { code, type } = event;
 
 	// Добавляем или удаляем клавишу из pressedKeys
 	if (type === 'keydown') {
 		pressedKeys[code] = true;
-	} else if (type === 'keyup') {
-		delete pressedKeys[code];
-	}
+		keysPressedCount++;
 
-	let language = localStorage.getItem('language') || 'en';
-
-	// Проверяем, нужно ли переключать язык
-	const isControlPressed = pressedKeys['ControlLeft'] || pressedKeys['ControlRight'];
-	const isShiftPressed = pressedKeys['ShiftLeft'] || pressedKeys['ShiftRight'];
-	if (isControlPressed && isShiftPressed) {
-		if (language === 'en') {
-			language = 'ru';
-			localStorage.setItem('language', language);
-		} else {
-			language = 'en';
-			localStorage.setItem('language', language);
+	// Проверяем количество нажатых клавиш
+		if (keysPressedCount >= 2) {
+			document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
+				if (pressedKeys[element.getAttribute('data')]) {
+					element.classList.add('active');
+				} else {
+					element.classList.remove('active');
+				}
+			});
 		}
-		toggleKeyboardLayout();
-	}
-	let pressedKeys = JSON.parse(localStorage.getItem('pressedKeys')) || {};
+		} else if (type === 'keyup') {
+				delete pressedKeys[code];
+					keysPressedCount--;
 
-// сохранение pressedKeys в localStorage
-	saveToLocalStorage();
+	// Если количество нажатых клавиш меньше 2, то удаляем класс 'active' у всех клавиш
+	if (keysPressedCount < 2) {
+		document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
+			element.classList.remove('active');
+			});
+	}
+	}
 }
 
 // Добавляем обработчики на клавиатуру
