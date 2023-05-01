@@ -2,9 +2,12 @@ import {englishKeys, russianKeys} from './modules/dictionary.js';
 import { createVirtualKeyboard } from './modules/keyboard-builder.js';
 createVirtualKeyboard();
 
-window.onload = function() {
+window.addEventListener('load', function() {
 	document.querySelector('.text-space').focus();
-}
+	const language = localStorage.getItem('language') || 'en';
+	toggleKeyboardLayout(language);
+});
+
 
 function fillVirtualKeyboard() {
 	let out = '';
@@ -51,34 +54,34 @@ let pressedKeys = {};
 
 // Функция, которая обновляет статус клавиш в объекте pressedKeys и меняет язык при необходимости
 function updatePressedKeysAndToggleLanguage(event) {
-	const code = event.code;
+	const { code, type } = event;
+
+	// Добавляем или удаляем клавишу из pressedKeys
+	if (type === 'keydown') {
+		pressedKeys[code] = true;
+	} else if (type === 'keyup') {
+		delete pressedKeys[code];
+	}
+
+	let language = localStorage.getItem('language') || 'en';
+
+	// Проверяем, нужно ли переключать язык
+	const isControlPressed = pressedKeys['ControlLeft'] || pressedKeys['ControlRight'];
 	const isShiftPressed = pressedKeys['ShiftLeft'] || pressedKeys['ShiftRight'];
-	const isCtrlPressed = pressedKeys['ControlLeft'] || pressedKeys['ControlRight'];
-
-if (event.type === 'keydown') {
-	pressedKeys[code] = true;
-
-	if (isShiftPressed && isCtrlPressed) {
+	if (isControlPressed && isShiftPressed) {
+		if (language === 'en') {
+			language = 'ru';
+			localStorage.setItem('language', language);
+		} else {
+			language = 'en';
+			localStorage.setItem('language', language);
+		}
 		toggleKeyboardLayout();
 	}
-} else if (event.type === 'keyup') {
-	delete pressedKeys[code];
-}
+	let pressedKeys = JSON.parse(localStorage.getItem('pressedKeys')) || {};
 
-const keyboard = document.querySelector('.keyboard');
-const isRussian = isShiftPressed && isCtrlPressed;
-keyboard.setAttribute('data-language', isRussian ? 'ru' : 'en');
-
-document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
-	const key = element.getAttribute('data');
-	const isPressed = pressedKeys[key];
-
-	if (isPressed) {
-		element.classList.add('active');
-	} else {
-		element.classList.remove('active');
-	}
-});
+// сохранение pressedKeys в localStorage
+	saveToLocalStorage();
 }
 
 // Добавляем обработчики на клавиатуру
@@ -129,13 +132,17 @@ function toggleKeyboardLayout() {
 			key.innerHTML = value;
 	}
 
-	// Меняем значение переменной isRussianKeyboard и добавляем/удаляем класс на клавиатуре
+	// Меняем значение переменной language и добавляем/удаляем класс на клавиатуре
 	isRussianKeyboard = !isRussianKeyboard;
 	if (isRussianKeyboard) {
-			keyboard.setAttribute('data-language', 'ru');
-	} else {
-			keyboard.setAttribute('data-language', 'en');
-	}
+		keyboard.setAttribute('data-language', 'ru');
+		language = 'ru';
+} else {
+		keyboard.setAttribute('data-language', 'en');
+		language = 'en';
+}
+// Сохраняем language в localStorage
+localStorage.setItem('language', language);
 }
 
 // Добавляем обработчик на нажатие клавиш
@@ -163,13 +170,45 @@ document.addEventListener('keyup', function(event) {
 // Добавляем ввод текста по клику мышкой
 document.querySelectorAll('.keyboard .k-key').forEach(function (element) {
 	element.addEventListener('click', function (event) {
-		const code = event.target.textContent;
+		const code = event.target.getAttribute('data');
 		const textarea = document.querySelector('.text-space');
-		textarea.value += event.shiftKey ? code.toUpperCase() : code.toLowerCase();
+
+		// проверяем, является ли клавиша служебной
+		if (code === 'Backspace') {
+			textarea.value = textarea.value.slice(0, -1); // удаляем последний символ
+		} else if (code === 'Enter') {
+			textarea.value += '\n'; // добавляем символ перевода строки
+		} else if (code === 'Tab') {
+			textarea.value += '    '; // добавляем табуляцию (четыре пробела)
+		} else if (code === 'CapsLock' || code === 'Shift' || code === 'Ctrl' || code === 'Alt') {
+			// ничего не делаем при нажатии этих клавиш
+		} else {
+			textarea.value += event.shiftKey ? this.textContent.toUpperCase() : this.textContent.toLowerCase(); // добавляем значение клавиши
+		}
 		textarea.focus();
 	});
 });
 
+// сохранение языка раскладки в localStorage
+localStorage.setItem('language', 'ru');
+// получение языка раскладки из localStorage
+console.log(localStorage.getItem('language'));
+
+const language = localStorage.getItem('language');
+
+function saveToLocalStorage() {
+	localStorage.setItem('pressedKeys', JSON.stringify(pressedKeys));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	const currentLanguage = language || 'ru';
+
+	isRussianKeyboard = localStorage.getItem('isRussianKeyboard') === 'true';
+	pressedKeys = JSON.parse(localStorage.getItem('pressedKeys')) || {};
+
+	toggleKeyboardLayout();
+	updatePressedKeysAndToggleLanguage({ code: '' }, currentLanguage);
+});
 
 
 // Находим кнопки для задания стилей
