@@ -211,7 +211,6 @@ document.addEventListener('keydown', function(event) {
 // сохранение языка раскладки в localStorage
 localStorage.setItem('language', 'ru');
 // получение языка раскладки из localStorage
-console.log(localStorage.getItem('language'));
 
 const language = localStorage.getItem('language');
 
